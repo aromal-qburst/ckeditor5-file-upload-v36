@@ -11,13 +11,13 @@
     "plugin"
   ],
   "dependencies": {
-    "@ckeditor/ckeditor5-core": "^17.0.0",
-    "@ckeditor/ckeditor5-upload": "^17.0.0",
-    "@ckeditor/ckeditor5-ui": "^17.0.0",
-    "@ckeditor/ckeditor5-clipboard": "^17.0.0",
-    "@ckeditor/ckeditor5-engine": "^17.0.0",
-    "@ckeditor/ckeditor5-utils": "^17.0.0",
-    "@ckeditor/ckeditor5-widget": "^17.0.0"
+    "@ckeditor/ckeditor5-core": "^36.0.1",
+    "@ckeditor/ckeditor5-upload": "^36.0.1",
+    "@ckeditor/ckeditor5-ui": "^36.0.1",
+    "@ckeditor/ckeditor5-clipboard": "^36.0.1",
+    "@ckeditor/ckeditor5-engine": "^36.0.1",
+    "@ckeditor/ckeditor5-utils": "^36.0.1",
+    "@ckeditor/ckeditor5-widget": "^36.0.1"
   },
   "repository": {
     "type": "git",
