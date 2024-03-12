@@ -80,32 +80,29 @@ function createFileFromBlob( blob, filename, mimeType ) {
 	}
 }
 
-export function insertFileLink( writer, model, attributes = {}, file ) {
-	const selectedContent = model.document.selection.getSelectedContent();
-	console.log(selectedContent);
-	if (selectedContent && selectedContent.is('text')) {
-		const selectedText = selectedContent.getText();
-		const linkElement = writer.model.schema.createTextNode('a');
+export function insertFileLink(writer, model, attributes = {}, file) {
+    const selection = model.document.selection;
 
-		// Set the href attribute of the link.
-		writer.model.change(writer => {
-			writer.setAttribute('href', 'https://www.google.com/', linkElement);
-		});
+    if (selection.isCollapsed) {
+        // If no text is selected, insert the linked text at the cursor position.
+        const insertAtSelection = model.document.createPositionAt(model.document.getRoot(), 'end');
+        const linkedText = writer.createText(file.name, attributes);
+        model.insertContent(linkedText, insertAtSelection);
 
-		// Replace the selected content with the link.
-		model.change(writer => {
-			model.insertContent(linkElement, model.document.selection.getFirstPosition(), model.document.selection.getLastPosition());
-		});
-	}else{
-		const selection = model.document.selection;
-		const insertAtSelection = findOptimalInsertionRange( selection, model );
-		const linkedText = writer.createText(" Download", attributes);
-		model.insertContent(linkedText, insertAtSelection);
-	
-		if ( linkedText.parent ) {
-			writer.setSelection( linkedText, 'on' );
-		}
-	}
+        // Set the selection to the inserted text.
+        writer.setSelection(linkedText, 'on');
+    } else {
+        // If text is selected, replace the selection with the linked text.
+        const selectedRanges = selection.getRanges();
+        model.change(writer => {
+            selectedRanges.forEach(range => {
+                const linkElement = writer.createElement('link');
+                writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
+
+                writer.wrap(linkElement, range);
+            });
+        });
+    }
 }
 
 
