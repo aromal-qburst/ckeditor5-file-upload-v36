@@ -84,6 +84,8 @@ export function insertFileLink( writer, model, attributes = {}, file ) {
 	const selection = model.document.selection;
 	const insertAtSelection = findOptimalInsertionRange( selection, model );
 
+	console.log(selection.getSelectedBlocks(), selection, model, "deeeeeeeeeeebbbbbbbbbbbbbbbbbuuuuuuuuu");
+
 	const linkedText = writer.createText("Download", attributes);
 	model.insertContent(linkedText, insertAtSelection);
 
