@@ -120,7 +120,10 @@ class FileUploadAdapter {
         // Prepare the form data.
         const data = new FormData();
 
-        data.append( 'file', file );
+        form.append("file", file);
+        form.append("details", new Blob([JSON.stringify({ type: file?.type.split('/')[0], title: `${file?.name}${new Date().getTime()}` })], {
+            type: "application/json"
+        }))
      //   data.append("details", "{}")
         // Send the request.
         this.xhr.send( data );
