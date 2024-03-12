@@ -120,8 +120,8 @@ class FileUploadAdapter {
         // Prepare the form data.
         const data = new FormData();
 
-        data.append( 'upload', file );
-
+        data.append( 'file', file );
+     //   data.append("details", "{}")
         // Send the request.
         this.xhr.send( data );
     }
