@@ -94,7 +94,7 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
             }
         } else {
             const ranges = selection.getRanges();
-			const selected_text = editor.getSelection().getSelectedText();
+			const selected_text = selection.getSelectedText();
 			console.log(ranges, selected_text, "rangesrangesranges");
 
             // for (let i = 0; i < ranges.length; i++) {

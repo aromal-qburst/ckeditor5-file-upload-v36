@@ -7,7 +7,12 @@ export default class FileUploadCommand extends Command {
 	 * @inheritDoc
 	 */
 	refresh() {
-		this.isEnabled = true;
+		//this.isEnabled = true;
+
+		const model = this.editor.model;
+        const selection = model.document.selection;
+
+        this.isEnabled = selection.hasAttribute('text');
 	}
 
 	/**
@@ -18,16 +23,26 @@ export default class FileUploadCommand extends Command {
 	 * @param {File|Array.<File>} options.file The file or an array of files to upload.
 	 */
 	execute( options ) {
-		const editor = this.editor;
-		const model = editor.model;
-		const fileRepository = editor.plugins.get( FileRepository );
+		//const editor = this.editor;
+		// const model = editor.model;
+		// const fileRepository = editor.plugins.get( FileRepository );
 
-		model.change( writer => {
-			const filesToUpload = options.file;
-			for ( const file of filesToUpload ) {
-				uploadFile( writer, model, fileRepository, file, editor);
-			}
-		} );
+		// model.change( writer => {
+		// 	const filesToUpload = options.file;
+		// 	for ( const file of filesToUpload ) {
+		// 		uploadFile( writer, model, fileRepository, file, editor);
+		// 	}
+		// } );
+
+		const editor = this.editor;
+        const selectedText = editor.model.document.selection.getSelectedText();
+        
+        if (selectedText) {
+            editor.model.change(writer => {
+				const link = writer.createElement('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
+                writer.insertText(selectedText, link);
+            });
+        }
 	}
 }
 
