@@ -81,15 +81,21 @@ function createFileFromBlob( blob, filename, mimeType ) {
 }
 
 export function insertFileLink( writer, model, attributes = {}, file ) {
-	const selectedText = model.document.selection.getSelectedText();
-	if (selectedText) {
-		const linkElement = writer.createElement('link');
-		writer.setAttribute('href', 'your-link-here', linkElement); // Set the link href here
+	const selectedContent = model.document.selection.getSelectedContent();
+	console.log(selectedContent);
+	if (selectedContent && selectedContent.is('text')) {
+		const selectedText = selectedContent.getText();
+		const linkElement = writer.model.schema.createTextNode('a');
 
-		const selectedRange = model.document.selection.getFirstPosition();
-		const linkRange = writer.createRangeOn(selectedRange);
+		// Set the href attribute of the link.
+		writer.model.change(writer => {
+			writer.setAttribute('href', 'https://www.google.com/', linkElement);
+		});
 
-		writer.wrap(linkElement, linkRange);
+		// Replace the selected content with the link.
+		model.change(writer => {
+			model.insertContent(linkElement, model.document.selection.getFirstPosition(), model.document.selection.getLastPosition());
+		});
 	}else{
 		const selection = model.document.selection;
 		const insertAtSelection = findOptimalInsertionRange( selection, model );
