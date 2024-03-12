@@ -38,25 +38,18 @@ export default class FileUploadCommand extends Command {
 			return;
 		}
 	
-		let selectedText = '';
-	
-		for (const range of selection.getRanges()) {
-			const walker = range.getWalker({ ignoreElementEnd: true });
-	
-			let node;
-			while ((node = walker.next())) {
-				if (node.is('text')) {
-					selectedText += node.data;
-				}
-			}
-		}
-	
-		const link = model.builder.create('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
+		const range = selection.getFirstRange();
 		
-		model.change(writer => {
-			// Replace selected text with the link
-			writer.insertText(selectedText, link);
-		});
+		for (const item of range.getItems()) {
+			console.log(item.data, "getFirstRangegetFirstRangegetFirstRangegetFirstRange") //return the selected text
+		} 
+	
+		// const link = model.builder.create('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
+		
+		// model.change(writer => {
+		// 	// Replace selected text with the link
+		// 	writer.insertText(selectedText, link);
+		// });
 	}
 }
 
