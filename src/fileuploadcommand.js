@@ -43,6 +43,11 @@ export default class FileUploadCommand extends Command {
 		for (const item of range.getItems()) {
 			console.log(item.data, "getFirstRangegetFirstRangegetFirstRangegetFirstRange") //return the selected text
 		} 
+
+		editor.model.change( writer => {
+			const insertPosition = editor.model.document.selection.getFirstPosition();
+			writer.insertText( "linkText", { linkHref: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e'  }, insertPosition );
+		} );
 	
 		// const link = model.builder.create('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
 		
