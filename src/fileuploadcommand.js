@@ -7,12 +7,7 @@ export default class FileUploadCommand extends Command {
 	 * @inheritDoc
 	 */
 	refresh() {
-		//this.isEnabled = true;
-
-		const model = this.editor.model;
-        const selection = model.document.selection;
-
-        this.isEnabled = selection.hasAttribute('text');
+		this.isEnabled = true;
 	}
 
 	/**
