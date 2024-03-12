@@ -80,32 +80,29 @@ function createFileFromBlob( blob, filename, mimeType ) {
 	}
 }
 
-export function insertFileLink( writer, model, attributes = {}, file ) {
-	try {
-		const selection = model.document.selection;
-		if (selection.isCollapsed) {
-			const insertAtSelection = findOptimalInsertionRange( selection, model );
-	
-			const linkedText = writer.createText(file.name, attributes);
-			model.insertContent(linkedText, insertAtSelection);
-		
-			if ( linkedText.parent ) {
-				writer.setSelection( linkedText, 'on' );
-			}
-		} else {
-			// If text is selected, replace the selection with the linked text.
-			const selectedRanges = selection.getRanges();
-			console.log(selectedRanges, "selectedRanges");
-			const range = selection.getFirstRange();
-			const linkElement = writer.createElement('a');
-			writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
-			model.change(writer => {
-				writer.wrap(linkElement, range);
-			});
-		}
-	} catch (error) {
-		console.log(error, "ckeditor ====> errorerrorerrorerror");
-	}
+export function insertFileLink(writer, model, attributes = {}, file) {
+    try {
+        const selection = model.document.selection;
+
+        if (selection.isCollapsed) {
+            const insertAtSelection = findOptimalInsertionRange(selection, model);
+            const linkedText = writer.createText(file.name, attributes);
+            model.insertContent(linkedText, insertAtSelection);
+
+            if (linkedText.parent) {
+                writer.setSelection(linkedText, 'on');
+            }
+        } else {
+            const range = selection.getFirstRange();
+            const linkElement = writer.createElement('a');
+            writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
+            model.change(writer => {
+                writer.wrap(linkElement, range);
+            });
+        }
+    } catch (error) {
+        console.log(error, "ckeditor ====> errorerrorerrorerror");
+    }
 }
 
 
