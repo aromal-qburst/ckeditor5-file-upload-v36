@@ -82,7 +82,7 @@ function createFileFromBlob( blob, filename, mimeType ) {
 
 export function insertFileLink(writer, model, attributes = {}, file) {
     try {
-        const selection = model.document.selection;
+		const selection = model.document.selection;
 
         if (selection.isCollapsed) {
             const insertAtSelection = findOptimalInsertionRange(selection, model);
@@ -95,15 +95,17 @@ export function insertFileLink(writer, model, attributes = {}, file) {
         } else {
             const ranges = selection.getRanges();
 
-            ranges.forEach(range => {
-                // Flatten the range
+            for (let i = 0; i < ranges.length; i++) {
+                const range = ranges[i];
                 const flatRange = range.getWalker({ ignoreElementEnd: true }).toNextEditable(true).getRange();
+                
                 const linkElement = writer.createElement('a');
                 writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
+                
                 model.change(writer => {
                     writer.wrap(linkElement, flatRange);
                 });
-            });
+            }
         }
     } catch (error) {
         console.log(error, "ckeditor ====> errorerrorerrorerror");
