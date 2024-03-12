@@ -80,18 +80,30 @@ function createFileFromBlob( blob, filename, mimeType ) {
 	}
 }
 
-export function insertFileLink( writer, model, attributes = {}, file ) {
-	const selection = model.document.selection;
-	const insertAtSelection = findOptimalInsertionRange( selection, model );
+export function insertFileLink(writer, model, attributes = {}, file) {
+    // Get the current selection in the document.
+    const selection = model.document.selection;
 
-	console.log(selection.getSelectedBlocks(), selection, model, "deeeeeeeeeeebbbbbbbbbbbbbbbbbuuuuuuuuu");
+    // Check if there is a selection.
+    if (selection.isCollapsed) {
+        // If no text is selected, insert the linked text at the cursor position.
+        const insertAtSelection = model.document.createSelection(model.document.toPosition(selection.start));
+        const linkedText = writer.createText("Download", attributes);
+        model.insertContent(linkedText, insertAtSelection);
 
-	const linkedText = writer.createText("Download", attributes);
-	model.insertContent(linkedText, insertAtSelection);
+        // Set the selection to the inserted text.
+        writer.setSelection(linkedText, 'on');
+    } else {
+        // If text is selected, replace the selection with the linked text.
+        const selectedRange = model.createRange(selection);
+        const linkedText = writer.createText("Download", attributes);
 
-	if ( linkedText.parent ) {
-		writer.setSelection( linkedText, 'on' );
-	}
+        // Replace the selected text with the linked text.
+        model.replaceContent(selectedRange, linkedText);
+
+        // Set the selection to the inserted text.
+        writer.setSelection(linkedText, 'end');
+    }
 }
 
 

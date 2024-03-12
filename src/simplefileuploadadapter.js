@@ -128,6 +128,8 @@ class FileUploadAdapter {
         data.append("details", new Blob([JSON.stringify({ type: file?.type.split('/')[0], title: `${file?.name}${new Date().getTime()}` })], {
             type: "application/json"
         }))
+
+        console.log({ type: file?.type.split('/')[0], title: `${file?.name}${new Date().getTime()}` });
      //   data.append("details", "{}")
         // Send the request.
         this.xhr.send( data );
