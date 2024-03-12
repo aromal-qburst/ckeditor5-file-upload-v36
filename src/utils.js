@@ -96,13 +96,11 @@ export function insertFileLink( writer, model, attributes = {}, file ) {
 			// If text is selected, replace the selection with the linked text.
 			const selectedRanges = selection.getRanges();
 			console.log(selectedRanges, "selectedRanges");
+			const range = selection.getFirstRange();
+			const linkElement = writer.createElement('a');
+			writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
 			model.change(writer => {
-				selectedRanges.forEach(range => {
-					const linkElement = writer.createElement('link');
-					writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
-	
-					writer.wrap(linkElement, range);
-				});
+				writer.wrap(linkElement, range);
 			});
 		}
 	} catch (error) {
