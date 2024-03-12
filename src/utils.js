@@ -94,6 +94,7 @@ export function insertFileLink(writer, model, attributes = {}, file) {
             }
         } else {
             const ranges = selection.getRanges();
+			console.log(ranges, "rangesrangesranges");
 
             for (let i = 0; i < ranges.length; i++) {
                 const range = ranges[i];
