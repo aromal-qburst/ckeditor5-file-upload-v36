@@ -80,7 +80,7 @@ function createFileFromBlob( blob, filename, mimeType ) {
 	}
 }
 
-export function insertFileLink(writer, model, attributes = {}, file) {
+export function insertFileLink(writer, model, attributes = {}, file, editor) {
     try {
 		const selection = model.document.selection;
 
@@ -94,19 +94,20 @@ export function insertFileLink(writer, model, attributes = {}, file) {
             }
         } else {
             const ranges = selection.getRanges();
-			console.log(ranges, "rangesrangesranges");
+			const selected_text = editor.getSelection().getSelectedText();
+			console.log(ranges, selected_text, "rangesrangesranges");
 
-            for (let i = 0; i < ranges.length; i++) {
-                const range = ranges[i];
-                const flatRange = range.getWalker({ ignoreElementEnd: true }).toNextEditable(true).getRange();
+            // for (let i = 0; i < ranges.length; i++) {
+            //     const range = ranges[i];
+            //     const flatRange = range.getWalker({ ignoreElementEnd: true }).toNextEditable(true).getRange();
                 
-                const linkElement = writer.createElement('a');
-                writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
+            //     const linkElement = writer.createElement('a');
+            //     writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
                 
-                model.change(writer => {
-                    writer.wrap(linkElement, flatRange);
-                });
-            }
+            //     model.change(writer => {
+            //         writer.wrap(linkElement, flatRange);
+            //     });
+            // }
         }
     } catch (error) {
         console.log(error, "ckeditor ====> errorerrorerrorerror");
