@@ -81,13 +81,24 @@ function createFileFromBlob( blob, filename, mimeType ) {
 }
 
 export function insertFileLink( writer, model, attributes = {}, file ) {
-	const selection = model.document.selection;
-	const insertAtSelection = findOptimalInsertionRange( selection, model );
-	const linkedText = writer.createText("Download", attributes);
-	model.insertContent(linkedText, insertAtSelection);
+	const selectedText = model.document.selection.getSelectedText();
+	if (selectedText) {
+		const linkElement = writer.createElement('link');
+		writer.setAttribute('href', 'your-link-here', linkElement); // Set the link href here
 
-	if ( linkedText.parent ) {
-		writer.setSelection( linkedText, 'on' );
+		const selectedRange = model.document.selection.getFirstPosition();
+		const linkRange = writer.createRangeOn(selectedRange);
+
+		writer.wrap(linkElement, linkRange);
+	}else{
+		const selection = model.document.selection;
+		const insertAtSelection = findOptimalInsertionRange( selection, model );
+		const linkedText = writer.createText(" Download", attributes);
+		model.insertContent(linkedText, insertAtSelection);
+	
+		if ( linkedText.parent ) {
+			writer.setSelection( linkedText, 'on' );
+		}
 	}
 }
 
