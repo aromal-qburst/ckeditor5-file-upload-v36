@@ -109,7 +109,7 @@ class FileUploadAdapter {
     // Prepares the data and sends the request.
     _sendRequest( file ) {
 		// set header request
-        this.options?.onUploadStart?.(response);
+        this.options?.onUploadStart?.(file);
 		const headers = this.options.headers || {};
 		
 		// Use the withCredentials if exist.
