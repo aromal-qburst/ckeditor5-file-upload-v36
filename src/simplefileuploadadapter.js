@@ -88,8 +88,10 @@ class FileUploadAdapter {
                 return reject( response && response.error ? response.error.message : genericErrorText );
             }
 
+            const previewUrl = this.options?.getResourcUrl?.(response) || response.url
+
             resolve( {
-                resourceUrl: response.url
+                resourceUrl: previewUrl
             } );
         } );
 

@@ -194,7 +194,7 @@ export default class FileUploadEditing extends Plugin {
 			} )
 			.then( data => {
 				model.enqueueChange( 'transparent', writer => {
-					writer.setAttributes( { uploadStatus: 'complete', linkHref: 'https://sample-videos.com/img/Sample-png-image-500kb.png' }, fileElement );
+					writer.setAttributes( { uploadStatus: 'complete', linkHref: data?.resourceUrl }, fileElement );
 				} );
 
 				clean();
