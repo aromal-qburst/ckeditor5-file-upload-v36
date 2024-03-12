@@ -120,18 +120,12 @@ class FileUploadAdapter {
 		}
 
 		this.xhr.withCredentials = withCredentials;
-		
+        
+        
+
         // Prepare the form data.
-        const data = new FormData();
-
-        data.append("file", file);
-        data.append("details", new Blob([JSON.stringify({ type: file?.type.split('/')[0], title: `${file?.name}${new Date().getTime()}` })], {
-            type: "application/json"
-        }))
-
-        console.log({ type: file?.type.split('/')[0], title: `${file?.name}${new Date().getTime()}` });
-     //   data.append("details", "{}")
-        // Send the request.
+        const data = this.options?.getFormData?.(file)
+        if(!data)return this.options?.onError?.({ type: "FORM DATA ERROR" })
         this.xhr.send( data );
     }
 }
