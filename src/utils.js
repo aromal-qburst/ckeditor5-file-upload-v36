@@ -93,16 +93,22 @@ export function insertFileLink(writer, model, attributes = {}, file) {
                 writer.setSelection(linkedText, 'on');
             }
         } else {
-            const range = selection.getFirstRange();
-            const linkElement = writer.createElement('a');
-            writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
-            model.change(writer => {
-                writer.wrap(linkElement, range);
+            const ranges = selection.getRanges();
+
+            ranges.forEach(range => {
+                // Flatten the range
+                const flatRange = range.getWalker({ ignoreElementEnd: true }).toNextEditable(true).getRange();
+                const linkElement = writer.createElement('a');
+                writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
+                model.change(writer => {
+                    writer.wrap(linkElement, flatRange);
+                });
             });
         }
     } catch (error) {
         console.log(error, "ckeditor ====> errorerrorerrorerror");
     }
 }
+
 
 
