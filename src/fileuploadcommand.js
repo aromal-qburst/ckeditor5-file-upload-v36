@@ -32,22 +32,20 @@ export default class FileUploadCommand extends Command {
 		const editor = this.editor;
 		const model = editor.model;
 		const selection = model.document.selection;
-	
+		
 		if (selection.isCollapsed) {
 			// Selection is collapsed (no text selected)
 			return;
 		}
-	
-		const range = selection.getFirstRange();
 		
-		for (const item of range.getItems()) {
-			console.log(item.data, "getFirstRangegetFirstRangegetFirstRangegetFirstRange") //return the selected text
-		} 
-
-		editor.model.change( writer => {
-			const insertPosition = editor.model.document.selection.getFirstPosition();
-			writer.insertText( "linkText", { linkHref: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e'  }, insertPosition );
-		} );
+		const range = selection.getFirstRange();
+		const selectedText = Array.from(range.getWalker()).map(item => item.data).join('');
+		
+		editor.model.change(writer => {
+			const insertPosition = range.start;
+			writer.insertText(selectedText, { linkHref: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' }, insertPosition);
+			writer.remove(range);
+		});
 	
 		// const link = model.builder.create('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
 		
