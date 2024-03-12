@@ -120,8 +120,8 @@ class FileUploadAdapter {
         // Prepare the form data.
         const data = new FormData();
 
-        form.append("file", file);
-        form.append("details", new Blob([JSON.stringify({ type: file?.type.split('/')[0], title: `${file?.name}${new Date().getTime()}` })], {
+        data.append("file", file);
+        data.append("details", new Blob([JSON.stringify({ type: file?.type.split('/')[0], title: `${file?.name}${new Date().getTime()}` })], {
             type: "application/json"
         }))
      //   data.append("details", "{}")
