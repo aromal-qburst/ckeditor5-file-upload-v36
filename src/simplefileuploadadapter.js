@@ -85,9 +85,10 @@ class FileUploadAdapter {
             const response = xhr.response;
 
             if ( !response || response.error ) {
+                this.options?.onError?.(response);
                 return reject( response && response.error ? response.error.message : genericErrorText );
             }
-
+            this.options?.onSuccess?.(response);
             const previewUrl = this.options?.getResourcUrl?.(response) || response.url
 
             resolve( {
@@ -108,6 +109,7 @@ class FileUploadAdapter {
     // Prepares the data and sends the request.
     _sendRequest( file ) {
 		// set header request
+        this.options?.onUploadStart?.(response);
 		const headers = this.options.headers || {};
 		
 		// Use the withCredentials if exist.
