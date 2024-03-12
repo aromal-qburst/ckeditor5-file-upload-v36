@@ -30,14 +30,22 @@ export default class FileUploadCommand extends Command {
 		// } );
 
 		const editor = this.editor;
-        const selectedText = editor.model.document.selection.getSelectedText();
-        
-        if (selectedText) {
-            editor.model.change(writer => {
-				const link = writer.createElement('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
-                writer.insertText(selectedText, link);
-            });
-        }
+		const model = editor.model;
+		const selection = model.document.selection;
+	
+		if (selection.isCollapsed) {
+			// Selection is collapsed (no text selected)
+			return;
+		}
+	
+		const selectedText = model.document.selection.getSelectedText();
+	
+		const link = model.builder.create('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
+		
+		model.change(writer => {
+			// Replace selected text with the link
+			writer.insertText(selectedText, link);
+		});
 	}
 }
 
