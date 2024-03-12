@@ -38,7 +38,11 @@ export default class FileUploadCommand extends Command {
 			return;
 		}
 	
-		const selectedText = model.document.selection.getSelectedText();
+		let selectedText = '';
+	
+		for (const range of selection.getRanges()) {
+			selectedText += range.getWalker({ ignoreElementEnd: true }).getText();
+		}
 	
 		const link = model.builder.create('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
 		
