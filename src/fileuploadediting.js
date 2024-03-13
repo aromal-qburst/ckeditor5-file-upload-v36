@@ -131,7 +131,7 @@ export default class FileUploadEditing extends Plugin {
 			const changes = doc.differ.getChanges( { includeChangesInGraveyard: true } );
 			for ( const entry of changes ) {
 				console.log(entry.type, "entry.typeentry.typeentry.type");
-				if ( entry.type == 'insert') {
+				if ( entry.type == 'insert' || entry.type == "attribute") {
 					const item = entry.position.nodeAfter;
 					if (item) {
 						const isInGraveyard = entry.position.root.rootName == '$graveyard';
