@@ -117,8 +117,8 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 
 			console.log(rangesToUpdate, attributes, "rangesToUpdaterangesToUpdaterangesToUpdate");
 			for ( const range of rangesToUpdate ) {
-				writer.setAttribute( 'linkHref', attributes?.linkHref || '', range );
-				writer.setAttribute( 'uploadId', attributes?.uploadId || '', range );
+				//writer.setAttribute( 'linkHref', attributes?.linkHref || '', range );
+				writer.setAttribute(attributes, range );
 			}
 
 			writer.setSelection(rangesToUpdate?.[0], 'on');
