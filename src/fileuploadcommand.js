@@ -49,6 +49,7 @@ export default class FileUploadCommand extends Command {
 			// Selection is collapsed (no text selected)
 			return;
 		}
+		model.change( writer => {
 		
 		// If selection has non-collapsed ranges, we change attribute on nodes inside those ranges
 				// omitting nodes where the `linkHref` attribute is disallowed.
@@ -85,6 +86,7 @@ export default class FileUploadCommand extends Command {
 						writer.removeAttribute( item, range );
 					} );
 				}
+			})
 	
 		// const link = model.builder.create('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
 		
