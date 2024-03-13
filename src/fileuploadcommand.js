@@ -40,19 +40,11 @@ export default class FileUploadCommand extends Command {
 		
 		const range = selection.getFirstRange();
 		const selectedText = Array.from(range.getWalker()).map(item => item.data).join('');
-		console.log(selectedText, "selectedTextselectedText");
 		
 		editor.model.change(writer => {
 			const insertPosition = range.start;
-			const linkElement = writer.createElement('a');
-			writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement);
-			
-			const flatRanges = writer.flattenRange(range);
-			console.log(flatRanges, "flatRangesflatRangesflatRanges");
-				// Wrap each flat range
-				flatRanges?.forEach?.(flatRange => {
-					writer.wrap(linkElement, flatRange);
-				});
+			//writer.remove(range);
+			writer.insertText(selectedText, { linkHref: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' }, insertPosition);
 		});
 	
 		// const link = model.builder.create('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
