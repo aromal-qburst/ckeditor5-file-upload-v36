@@ -82,10 +82,10 @@ class FileUploadAdapter {
             const response = xhr.response;
 
             if ( !response || response.error ) {
-                this.options?.onError?.(response);
+                this.options?.onError?.(response, file.name);
                 return reject( response && response.error ? response.error.message : genericErrorText );
             }
-            this.options?.onSuccess?.(response);
+            this.options?.onSuccess?.(response, file.name);
             const previewUrl = this.options?.getResourcUrl?.(response) || response.url
 
             resolve( {
