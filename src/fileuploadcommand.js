@@ -43,8 +43,11 @@ export default class FileUploadCommand extends Command {
 		
 		editor.model.change(writer => {
 			const insertPosition = range.start;
-			writer.remove(range);
-			writer.insertText(selectedText, { linkHref: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' }, insertPosition);
+			//writer.remove(range);
+			const linkElement = writer.createElement('a');
+			writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement);
+			writer.wrap(linkElement, range);
+			//writer.insertText(selectedText, { linkHref: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' }, insertPosition);
 		});
 	
 		// const link = model.builder.create('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
