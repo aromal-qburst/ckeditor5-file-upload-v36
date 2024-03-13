@@ -50,7 +50,7 @@ export default class FileUploadCommand extends Command {
 			const flatRanges = writer.flattenRange(range);
 			console.log(flatRanges, "flatRangesflatRangesflatRanges");
 				// Wrap each flat range
-				flatRanges.forEach(flatRange => {
+				flatRanges?.forEach?.(flatRange => {
 					writer.wrap(linkElement, flatRange);
 				});
 		});
