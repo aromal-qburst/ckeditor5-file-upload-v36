@@ -132,7 +132,7 @@ export default class FileUploadEditing extends Plugin {
 			for ( const entry of changes ) {
 				
 				if(entry.type == "attribute" && entry?.attributeKey === "uploadId"){
-					const item = entry.range.start;
+					const item = entry.range.start?.nodeAfter;
 					console.log(entry, "entry.typeentry.typeentry.type");
 					if (item) {
 						try {
