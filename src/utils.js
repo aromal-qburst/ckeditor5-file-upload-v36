@@ -93,21 +93,31 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
                 writer.setSelection(linkedText, 'on');
             }
         } else {
-            const ranges = selection.getRanges();
-			const selected_text = selection.getSelectedText();
-			console.log(ranges, selected_text, "rangesrangesranges");
+			const ranges = model.schema.getValidRanges( selection.getRanges(), 'linkHref' );
 
-            // for (let i = 0; i < ranges.length; i++) {
-            //     const range = ranges[i];
-            //     const flatRange = range.getWalker({ ignoreElementEnd: true }).toNextEditable(true).getRange();
-                
-            //     const linkElement = writer.createElement('a');
-            //     writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement); // Set the link href here
-                
-            //     model.change(writer => {
-            //         writer.wrap(linkElement, flatRange);
-            //     });
-            // }
+			// But for the first, check whether the `linkHref` attribute is allowed on selected blocks (e.g. the "image" element).
+			const allowedRanges = [];
+
+			for ( const element of selection.getSelectedBlocks() ) {
+				if ( model.schema.checkAttribute( element, 'linkHref' ) ) {
+					allowedRanges.push( writer.createRangeOn( element ) );
+				}
+			}
+
+			// Ranges that accept the `linkHref` attribute. Since we will iterate over `allowedRanges`, let's clone it.
+			const rangesToUpdate = allowedRanges.slice();
+
+			// For all selection ranges we want to check whether given range is inside an element that accepts the `linkHref` attribute.
+			// If so, we don't want to propagate applying the attribute to its children.
+			for ( const range of ranges ) {
+				if (_isRangeToUpdate( range, allowedRanges ) ) {
+					rangesToUpdate.push( range );
+				}
+			}
+
+			for ( const range of rangesToUpdate ) {
+				writer.setAttribute( 'linkHref', 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e', range );
+			}
         }
     } catch (error) {
         console.log(error, "ckeditor ====> errorerrorerrorerror");
@@ -115,4 +125,15 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 }
 
 
+
+function _isRangeToUpdate( range, allowedRanges ) {
+	for ( const allowedRange of allowedRanges ) {
+		// A range is inside an element that will have the `linkHref` attribute. Do not modify its nodes.
+		if ( allowedRange.containsRange( range ) ) {
+			return false;
+		}
+	}
+
+	return true;
+}
 
