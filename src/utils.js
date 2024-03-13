@@ -117,11 +117,19 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 
 			console.log(rangesToUpdate, attributes, "rangesToUpdaterangesToUpdaterangesToUpdate");
 			for ( const range of rangesToUpdate ) {
-				writer.setAttribute( 'linkHref', attributes?.linkHref || '', range );
-				writer.setAttribute( 'uploadId', attributes?.uploadId || '', range );
+				const selectedText = Array.from(range.getWalker()).map(item => item.data).join('');
+				model.deleteContent(range, writer);
+				const linkedText = writer.createText(selectedText, attributes);
+				model.insertText(linkedText, range?.start);
+				// writer.setAttribute( 'linkHref', attributes?.linkHref || '', range );
+				// writer.setAttribute( 'uploadId', attributes?.uploadId || '', range );
+
+				
+
+				
 			}
 
-			writer.setSelection(rangesToUpdate?.[0], 'on');
+			//writer.setSelection(rangesToUpdate?.[0], 'on');
 
 
         }
