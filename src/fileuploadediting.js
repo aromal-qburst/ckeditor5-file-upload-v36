@@ -131,35 +131,39 @@ export default class FileUploadEditing extends Plugin {
 			const changes = doc.differ.getChanges( { includeChangesInGraveyard: true } );
 			for ( const entry of changes ) {
 				
-				if(entry.type == "attribute" && entry?.attributeKey === "uploadId"){
+				if(entry.type == "attribute" && entry?.attributeKey === "uploadId" && entry?.attributeNewValue){
 					const item = entry.range.start?.nodeAfter;
 					console.log(entry, "entry.typeentry.typeentry.type");
 					if (item) {
 						try {
 							console.log("getFileLinksFromChangeItem", getFileLinksFromChangeItem( editor, item ));
 						} catch (error) {
+							
+						}
+						try {
+							for ( const file of getFileLinksFromChangeItem( editor, item ) ) {
+								console.log(file, "console.log(file);console.log(file);console.log(file);console.log(file);");
+							
+								const uploadId = entry?.attributeNewValue;
+									if ( !uploadId ) {
+										continue;
+									}
+									// Check if the file is loaded on this client.
+									const loader = fileRepository.loaders.get( uploadId );
+		
+									if ( !loader ) {
+										continue;
+									}
+									if ( loader.status == 'idle' ) {
+										// If the file was inserted into content and has not been loaded yet, start loading it.
+										this._readAndUpload( loader, file );
+									}
+							
+	
+						}
+						} catch (error) {
 							console.log(error, "getFileLinksFromChangeItemerror", error);
 						}
-					// 	for ( const file of getFileLinksFromChangeItem( editor, item ) ) {
-					// 		console.log(file, "console.log(file);console.log(file);console.log(file);console.log(file);");
-						
-					// 		// const uploadId = entry?.attributeNewValue;
-					// 		// 	if ( !uploadId ) {
-					// 		// 		continue;
-					// 		// 	}
-					// 		// 	// Check if the file is loaded on this client.
-					// 		// 	const loader = fileRepository.loaders.get( uploadId );
-	
-					// 		// 	if ( !loader ) {
-					// 		// 		continue;
-					// 		// 	}
-					// 		// 	if ( loader.status == 'idle' ) {
-					// 		// 		// If the file was inserted into content and has not been loaded yet, start loading it.
-					// 		// 		this._readAndUpload( loader, file );
-					// 		// 	}
-						
-
-					// }
 
 					}
 					
