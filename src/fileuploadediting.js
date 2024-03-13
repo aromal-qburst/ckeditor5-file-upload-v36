@@ -130,34 +130,36 @@ export default class FileUploadEditing extends Plugin {
 		doc.on( 'change', () => {
 			const changes = doc.differ.getChanges( { includeChangesInGraveyard: true } );
 			for ( const entry of changes ) {
-				// console.log(entry, "entry.typeentry.typeentry.type");
-				// if(entry.type == "attribute"){
-				// 	const item = entry.range.start;
-				// 	console.log("getFileLinksFromChangeItem", getFileLinksFromChangeItem( editor, item ));
-				// 	if (item) {
-				// 		for ( const file of getFileLinksFromChangeItem( editor, item ) ) {
-				// 		if(entry?.attributeKey === "uploadId"){
-				// 			const uploadId = entry?.attributeNewValue;
-				// 				if ( !uploadId ) {
-				// 					continue;
-				// 				}
-				// 				// Check if the file is loaded on this client.
-				// 				const loader = fileRepository.loaders.get( uploadId );
-	
-				// 				if ( !loader ) {
-				// 					continue;
-				// 				}
-				// 				if ( loader.status == 'idle' ) {
-				// 					// If the file was inserted into content and has not been loaded yet, start loading it.
-				// 					this._readAndUpload( loader, file );
-				// 				}
-				// 		}
-
-				// 	}
-
-				// 	}
+				 console.log(entry, "entry.typeentry.typeentry.type");
+				if(entry.type == "attribute" && entry?.attributeKey === "uploadId"){
+					const item = entry.range.start;
 					
-				// }
+					if (item) {
+						console.log("getFileLinksFromChangeItem", getFileLinksFromChangeItem( editor, item ));
+						for ( const file of getFileLinksFromChangeItem( editor, item ) ) {
+							console.log(file, "console.log(file);console.log(file);console.log(file);console.log(file);");
+						
+							// const uploadId = entry?.attributeNewValue;
+							// 	if ( !uploadId ) {
+							// 		continue;
+							// 	}
+							// 	// Check if the file is loaded on this client.
+							// 	const loader = fileRepository.loaders.get( uploadId );
+	
+							// 	if ( !loader ) {
+							// 		continue;
+							// 	}
+							// 	if ( loader.status == 'idle' ) {
+							// 		// If the file was inserted into content and has not been loaded yet, start loading it.
+							// 		this._readAndUpload( loader, file );
+							// 	}
+						
+
+					}
+
+					}
+					
+				}
 
 				if ( entry.type == 'insert') {
 					const item = entry.position.nodeAfter;
