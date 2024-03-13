@@ -89,9 +89,9 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
             const linkedText = writer.createText(file.name, attributes);
             model.insertContent(linkedText, insertAtSelection);
 
-            if (linkedText.parent) {
-                writer.setSelection(linkedText, 'on');
-            }
+            // if (linkedText.parent) {
+            //     writer.setSelection(linkedText, 'on');
+            // }
         } else {
 			const ranges = model.schema.getValidRanges( selection.getRanges(), 'linkHref' );
 
@@ -119,6 +119,8 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 				writer.setAttribute( 'linkHref', attributes?.linkHref || '', range );
 				writer.setAttribute( 'uploadId', attributes?.uploadId || '', range );
 			}
+
+
         }
     } catch (error) {
         console.log(error, "ckeditor ====> errorerrorerrorerror");
