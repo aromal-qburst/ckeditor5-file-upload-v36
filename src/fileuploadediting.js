@@ -132,7 +132,24 @@ export default class FileUploadEditing extends Plugin {
 			for ( const entry of changes ) {
 				console.log(entry, "entry.typeentry.typeentry.type");
 				if(entry.type == "attribute"){
+					if(entry?.attributeKey === "uploadId"){
+						const uploadId = entry?.attributeNewValue;
+							if ( !uploadId ) {
+								continue;
+							}
+							// Check if the file is loaded on this client.
+							const loader = fileRepository.loaders.get( uploadId );
 
+							if ( !loader ) {
+								continue;
+							}
+							if ( loader.status == 'idle' ) {
+								// If the file was inserted into content and has not been loaded yet, start loading it.
+								this._readAndUpload( loader, file );
+							}
+
+
+					}
 				}
 
 				if ( entry.type == 'insert') {
