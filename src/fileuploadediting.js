@@ -133,6 +133,7 @@ export default class FileUploadEditing extends Plugin {
 				console.log(entry, "entry.typeentry.typeentry.type");
 				if(entry.type == "attribute"){
 					const item = entry.range.start;
+					console.log("getFileLinksFromChangeItem", getFileLinksFromChangeItem( editor, item ));
 					if (item) {
 						for ( const file of getFileLinksFromChangeItem( editor, item ) ) {
 						if(entry?.attributeKey === "uploadId"){
