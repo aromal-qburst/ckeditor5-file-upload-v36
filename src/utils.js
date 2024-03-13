@@ -116,7 +116,8 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 			}
 
 			for ( const range of rangesToUpdate ) {
-				writer.setAttribute( 'linkHref', 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e', range );
+				writer.setAttribute( 'linkHref', attributes?.linkHref || '', range );
+				writer.setAttribute( 'uploadId', attributes?.uploadId || '', range );
 			}
         }
     } catch (error) {
