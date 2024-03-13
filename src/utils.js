@@ -82,7 +82,7 @@ function createFileFromBlob( blob, filename, mimeType ) {
 
 export function insertFileLink(writer, model, attributes = {}, file, editor) {
     try {
-		const selection = { ...model.document.selection };
+		const selection = model.document.selection;
 
         if (selection.isCollapsed) {
             const insertAtSelection = findOptimalInsertionRange(selection, model);
@@ -117,19 +117,11 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 
 			console.log(rangesToUpdate, attributes, "rangesToUpdaterangesToUpdaterangesToUpdate");
 			for ( const range of rangesToUpdate ) {
-			//	const selectedText = Array.from(range.getWalker()).map(item => item.data).join('');
-				writer.remove(range);
-				const linkedText = writer.createText("selectedText", attributes);
-				model.insertText(linkedText, range?.start);
-				// writer.setAttribute( 'linkHref', attributes?.linkHref || '', range );
-				// writer.setAttribute( 'uploadId', attributes?.uploadId || '', range );
-
-				
-
-				
+				writer.setAttribute( 'linkHref', attributes?.linkHref || '', range );
+				writer.setAttribute( 'uploadId', attributes?.uploadId || '', range );
 			}
 
-			//writer.setSelection(rangesToUpdate?.[0], 'on');
+			writer.setSelection(rangesToUpdate?.[0], 'on');
 
 
         }

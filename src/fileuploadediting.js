@@ -164,6 +164,8 @@ export default class FileUploadEditing extends Plugin {
 					if (item) {
 						const isInGraveyard = entry.position.root.rootName == '$graveyard';
 						for ( const file of getFileLinksFromChangeItem( editor, item ) ) {
+
+							
 							// Check if the file element still has upload id.
 							const uploadId = file.getAttribute( 'uploadId' );
 							if ( !uploadId ) {
@@ -181,6 +183,7 @@ export default class FileUploadEditing extends Plugin {
 								// If the file was inserted to the graveyard - abort the loading process.
 								loader.abort();
 							} else if ( loader.status == 'idle' ) {
+								console.log(file, "console.log(file);console.log(file);console.log(file);console.log(file);");
 								// If the file was inserted into content and has not been loaded yet, start loading it.
 								this._readAndUpload( loader, file );
 							}
