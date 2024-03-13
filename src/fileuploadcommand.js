@@ -43,11 +43,21 @@ export default class FileUploadCommand extends Command {
 		
 		editor.model.change(writer => {
 			const insertPosition = range.start;
-			//writer.remove(range);
 			const linkElement = writer.createElement('a');
 			writer.setAttribute('href', 'https://chat.openai.com/c/0b90c92a-81d2-4c2f-8aba-0e1f3e33ab06', linkElement);
-			writer.wrap(linkElement, range);
-			//writer.insertText(selectedText, { linkHref: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' }, insertPosition);
+			
+			// Check if the range is non-flat
+			if (!range.isFlat) {
+				// If the range is non-flat, flatten it
+				const flatRanges = writer.flattenRange(range);
+				// Wrap each flat range
+				flatRanges.forEach(flatRange => {
+					writer.wrap(linkElement, flatRange);
+				});
+			} else {
+				// If the range is already flat, simply wrap it
+				writer.wrap(linkElement, range);
+			}
 		});
 	
 		// const link = model.builder.create('link', { href: 'https://chat.openai.com/c/1106aad2-dff5-48c6-936e-6061b16e222e' });
