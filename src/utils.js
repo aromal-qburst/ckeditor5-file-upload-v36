@@ -85,10 +85,14 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 		const selection = model.document.selection;
 	
         if (selection.isCollapsed) {
-		    const selectedElement = editor.model.document.selection.getSelectedElement();
+			const selection = editor.model.document.selection;
 
-            if (selectedElement && selectedElement.is('link')) {
-                const href = selectedElement.getAttribute('href');
+            // Get the parent node of the cursor position
+            const parentNode = selection.getSelectedParent();
+
+            // Check if the parent node is a link
+            if (parentNode && parentNode.is('element') && parentNode.name === 'link') {
+                const href = parentNode.getAttribute('href');
                 console.log('Href at cursor position:', href);
             } else {
                 console.log('No link at cursor position');
