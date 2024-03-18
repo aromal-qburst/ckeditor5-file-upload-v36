@@ -88,7 +88,7 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 			const selection = editor.model.document.selection;
 
             // Get the selected element, which should be a link
-            const selectedElement = editor.model.document.selection.getSelectedElement();
+            const selectedElement = editor.model.document.selection.getFirstPosition();
 
 			console.log(selectedElement, "selectedElementselectedElement");
 
