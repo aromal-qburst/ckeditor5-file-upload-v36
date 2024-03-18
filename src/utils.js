@@ -105,6 +105,7 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 			if(textNode?.getAttribute?.("linkHref")){
 				writer.setAttribute( 'linkHref', attributes?.linkHref || '', textNode);
 				writer.setAttribute( 'uploadId', attributes?.uploadId || '', textNode);
+				writer.setSelection(textNode, 'on');
 			}
 	
 			console.log('Cursor element:', insertAtCursor?.textNode?.getAttribute?.("linkHref"), insertAtCursor?.textNode);
