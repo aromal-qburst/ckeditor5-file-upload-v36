@@ -87,18 +87,19 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
         if (selection.isCollapsed) {
 			const selection = editor.model.document.selection;
 			const range = selection.getFirstRange()
+			const insertAtCursor = selection.getFirstPosition();
 			const startLink = findLinkElementAncestor( range.start );
             
-			console.log(startLink, range, "startLinkstartLinkstartLink");
+			console.log(insertAtCursor, startLink, range, "startLinkstartLinkstartLink");
 
-			const insertAtCursor = selection.getFirstPosition();
-            const insertAtSelection = findOptimalInsertionRange(selection, model);
-            const linkedText = writer.createText(file.name, attributes);
-            model.insertContent(linkedText, insertAtCursor);
+			// const insertAtCursor = selection.getFirstPosition();
+            // const insertAtSelection = findOptimalInsertionRange(selection, model);
+            // const linkedText = writer.createText(file.name, attributes);
+            // model.insertContent(linkedText, insertAtCursor);
 
-            if (linkedText.parent) {
-                writer.setSelection(linkedText, 'on');
-            }
+            // if (linkedText.parent) {
+            //     writer.setSelection(linkedText, 'on');
+            // }
         } else {
 			const ranges = model.schema.getValidRanges( selection.getRanges(), 'linkHref' );
 
