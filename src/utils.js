@@ -86,21 +86,10 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 	
         if (selection.isCollapsed) {
 			const selection = editor.model.document.selection;
-
-            // Get the selected element, which should be a link
-            const selectedElement = editor.model.document.selection.getFirstPosition();
-			const previousNode = selectedElement.nodeBefore?.()
-
-			
-			console.log(selectedElement, previousNode, "selectedElementselectedElement");
-
-
-            if (previousNode) {
-                const href = previousNode.getAttribute('href');
-                console.log('Href at cursor position:', href);
-            } else {
-                console.log('No link at cursor position');
-            }
+			const range = selection.getFirstRange().getTrimmed();
+			const startLink = findLinkElementAncestor( range.start );
+            
+			console.log(startLink, range, "startLinkstartLinkstartLink");
 
 			const insertAtCursor = selection.getFirstPosition();
             const insertAtSelection = findOptimalInsertionRange(selection, model);
@@ -160,3 +149,12 @@ function _isRangeToUpdate( range, allowedRanges ) {
 	return true;
 }
 
+
+function findLinkElementAncestor( position ) {
+	return position.getAncestors().find( ( ancestor ) => isLinkElement( ancestor ) ) || null;
+}
+
+
+export function isLinkElement( node ) {
+	return node.is( 'attributeElement' ) && !!node.getCustomProperty( 'link' );
+}
