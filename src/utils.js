@@ -101,6 +101,11 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 			// Get the cursor element
 			const cursorElement = startContainer.parent;
 			const insertAtCursor = selection.getFirstPosition();
+			const textNode = insertAtCursor?.textNode;
+			if(textNode?.getAttribute?.("linkHref")){
+				writer.setAttribute( 'linkHref', attributes?.linkHref || '', textNode);
+				writer.setAttribute( 'uploadId', attributes?.uploadId || '', textNode);
+			}
 	
 			console.log('Cursor element:', insertAtCursor?.textNode?.getAttribute?.("linkHref"), insertAtCursor?.textNode);
 			// const insertAtCursor = selection.getFirstPosition();
