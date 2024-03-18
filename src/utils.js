@@ -95,7 +95,7 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 			writer.setAttribute('linkHref', attributes?.linkHref || '', insertPosition);
 			writer.setAttribute('uploadId', attributes?.uploadId || '', insertPosition);
 
-
+			writer.setSelection(insertPosition, 'on');
             // if (linkedText.parent) {
             //     writer.setSelection(linkedText, 'on');
             // }
