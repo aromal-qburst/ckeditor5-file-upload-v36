@@ -89,8 +89,8 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 			const range = selection.getFirstRange()
 			const insertAtCursor = selection.getFirstPosition();
 			const startLink = findLinkElementAncestor( range.start );
-            
-			console.log(insertAtCursor, startLink, range, "startLinkstartLinkstartLink");
+            const getSelectedElement = selection.getSelectedElement()
+			console.log( getSelectedElement, "startLinkstartLinkstartLink");
 
 			// const insertAtCursor = selection.getFirstPosition();
             // const insertAtSelection = findOptimalInsertionRange(selection, model);
