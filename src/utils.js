@@ -88,7 +88,7 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 			const insertAtCursor = selection.getFirstPosition();
             const insertAtSelection = findOptimalInsertionRange(selection, model);
             const linkedText = writer.createText(file.name, attributes);
-            model.insertContent(linkedText, insertAtCursor);
+            model.insertText(linkedText, insertAtCursor);
 
             if (linkedText.parent) {
                 writer.setSelection(linkedText, 'on');
