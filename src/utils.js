@@ -102,7 +102,7 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 			const cursorElement = startContainer.parent;
 			const insertAtCursor = selection.getFirstPosition();
 	
-			console.log('Cursor element:', insertAtCursor, startContainer, selection.getSelectedBlocks());
+			console.log('Cursor element:', insertAtCursor?.textNode, startContainer, selection.getSelectedBlocks());
 			// const insertAtCursor = selection.getFirstPosition();
             // const insertAtSelection = findOptimalInsertionRange(selection, model);
             // const linkedText = writer.createText(file.name, attributes);
