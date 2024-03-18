@@ -85,38 +85,24 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 		const selection = model.document.selection;
 	
         if (selection.isCollapsed) {
-			// const range = selection.getFirstRange()
-			// const insertAtCursor = selection.getFirstPosition();
-            // const getSelectedElement = selection.getSelectedElement()
-			// 
-
 			const selection = editor.model.document.selection;
 
-			// Get the range of the selection
-			const range = selection.getFirstRange();
-	
-			// Get the start container of the range
-			const startContainer = range.start;
-	
 			// Get the cursor element
-			const cursorElement = startContainer.parent;
 			const insertAtCursor = selection.getFirstPosition();
 			const textNode = insertAtCursor?.textNode;
 			if(textNode?.getAttribute?.("linkHref")){
 				writer.setAttribute( 'linkHref', attributes?.linkHref || '', textNode);
 				writer.setAttribute( 'uploadId', attributes?.uploadId || '', textNode);
 				writer.setSelection(textNode, 'on');
+			}else{
+				const linkedText = writer.createText(file.name, attributes);
+				model.insertContent(linkedText, insertAtCursor);
+				if (linkedText.parent) {
+					writer.setSelection(linkedText, 'on');
+				}
 			}
 	
-			console.log('Cursor element:', insertAtCursor?.textNode?.getAttribute?.("linkHref"), insertAtCursor?.textNode);
-			// const insertAtCursor = selection.getFirstPosition();
-            // const insertAtSelection = findOptimalInsertionRange(selection, model);
-            // const linkedText = writer.createText(file.name, attributes);
-            // model.insertContent(linkedText, insertAtCursor);
-
-            // if (linkedText.parent) {
-            //     writer.setSelection(linkedText, 'on');
-            // }
+			
         } else {
 			const ranges = model.schema.getValidRanges( selection.getRanges(), 'linkHref' );
 
