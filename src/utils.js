@@ -83,11 +83,12 @@ function createFileFromBlob( blob, filename, mimeType ) {
 export function insertFileLink(writer, model, attributes = {}, file, editor) {
     try {
 		const selection = model.document.selection;
-
+	
         if (selection.isCollapsed) {
+			const insertAtCursor = selection.getFirstPosition();
             const insertAtSelection = findOptimalInsertionRange(selection, model);
             const linkedText = writer.createText(file.name, attributes);
-            model.insertContent(linkedText, insertAtSelection);
+            model.insertContent(linkedText, insertAtCursor);
 
             if (linkedText.parent) {
                 writer.setSelection(linkedText, 'on');
@@ -115,7 +116,6 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 				}
 			}
 
-			console.log(rangesToUpdate, attributes, "rangesToUpdaterangesToUpdaterangesToUpdate");
 			for ( const range of rangesToUpdate ) {
 				writer.setAttribute( 'linkHref', attributes?.linkHref || '', range );
 				writer.setAttribute( 'uploadId', attributes?.uploadId || '', range );
