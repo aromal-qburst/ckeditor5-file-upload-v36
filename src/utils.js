@@ -89,11 +89,12 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 
             // Get the selected element, which should be a link
             const selectedElement = editor.model.document.selection.getFirstPosition();
+			const previousNode = selectedElement.nodeBefore
 
 			console.log(selectedElement, "selectedElementselectedElement");
 
-            if (selectedElement && selectedElement.is('link')) {
-                const href = selectedElement.getAttribute('href');
+            if (previousNode) {
+                const href = previousNode.getAttribute('href');
                 console.log('Href at cursor position:', href);
             } else {
                 console.log('No link at cursor position');
