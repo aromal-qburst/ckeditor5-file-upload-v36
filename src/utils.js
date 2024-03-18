@@ -90,10 +90,18 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
             // const getSelectedElement = selection.getSelectedElement()
 			// 
 
-			const view = editor.editing.view;
-		const selectionssss = view.document.selection;
-		const selectedElement = selectionssss.getSelectedElement();
-		console.log( selectedElement, "startLinkstartLinkstartLink");
+			const selection = editor.model.document.selection;
+
+			// Get the range of the selection
+			const range = selection.getFirstRange();
+	
+			// Get the start container of the range
+			const startContainer = range.start;
+	
+			// Get the cursor element
+			const cursorElement = startContainer.parent;
+	
+			console.log('Cursor element:', startContainer, cursorElement);
 			// const insertAtCursor = selection.getFirstPosition();
             // const insertAtSelection = findOptimalInsertionRange(selection, model);
             // const linkedText = writer.createText(file.name, attributes);
