@@ -85,20 +85,23 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 		const selection = model.document.selection;
 	
         if (selection.isCollapsed) {
+			const linkElement = selection.getFirstPosition().getElement().getParent('link');
+
+            if (linkElement) {
+                const href = linkElement.getAttribute('href');
+                console.log('Href at cursor position:', href);
+            } else {
+                console.log('No link at cursor position');
+            }
+
 			const insertAtCursor = selection.getFirstPosition();
             const insertAtSelection = findOptimalInsertionRange(selection, model);
             const linkedText = writer.createText(file.name, attributes);
-          //  model.insertText(linkedText, insertAtCursor);
+            model.insertContent(linkedText, insertAtCursor);
 
-			const insertPosition = selection.getFirstPosition();
-			writer.insertText(file.name, insertPosition);
-			writer.setAttribute('linkHref', attributes?.linkHref || '', insertPosition);
-			writer.setAttribute('uploadId', attributes?.uploadId || '', insertPosition);
-
-			writer.setSelection(insertPosition, 'on');
-            // if (linkedText.parent) {
-            //     writer.setSelection(linkedText, 'on');
-            // }
+            if (linkedText.parent) {
+                writer.setSelection(linkedText, 'on');
+            }
         } else {
 			const ranges = model.schema.getValidRanges( selection.getRanges(), 'linkHref' );
 
