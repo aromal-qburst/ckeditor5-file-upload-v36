@@ -88,11 +88,17 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 			const insertAtCursor = selection.getFirstPosition();
             const insertAtSelection = findOptimalInsertionRange(selection, model);
             const linkedText = writer.createText(file.name, attributes);
-            model.insertText(linkedText, insertAtCursor);
+          //  model.insertText(linkedText, insertAtCursor);
 
-            if (linkedText.parent) {
-                writer.setSelection(linkedText, 'on');
-            }
+			const insertPosition = selection.getFirstPosition();
+			writer.insertText(file.name, insertPosition);
+			writer.setAttribute('linkHref', attributes?.linkHref || '', insertPosition);
+			writer.setAttribute('uploadId', attributes?.uploadId || '', insertPosition);
+
+
+            // if (linkedText.parent) {
+            //     writer.setSelection(linkedText, 'on');
+            // }
         } else {
 			const ranges = model.schema.getValidRanges( selection.getRanges(), 'linkHref' );
 
