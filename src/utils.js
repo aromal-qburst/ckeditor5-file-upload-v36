@@ -85,13 +85,15 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 		const selection = model.document.selection;
 	
         if (selection.isCollapsed) {
-			const selection = editor.model.document.selection;
-			const range = selection.getFirstRange()
-			const insertAtCursor = selection.getFirstPosition();
-			const startLink = findLinkElementAncestor( range.start );
-            const getSelectedElement = selection.getSelectedElement()
-			console.log( getSelectedElement, "startLinkstartLinkstartLink");
+			// const range = selection.getFirstRange()
+			// const insertAtCursor = selection.getFirstPosition();
+            // const getSelectedElement = selection.getSelectedElement()
+			// 
 
+			const view = editor.editing.view;
+		const selectionssss = view.document.selection;
+		const selectedElement = selectionssss.getSelectedElement();
+		console.log( selectedElement, "startLinkstartLinkstartLink");
 			// const insertAtCursor = selection.getFirstPosition();
             // const insertAtSelection = findOptimalInsertionRange(selection, model);
             // const linkedText = writer.createText(file.name, attributes);
