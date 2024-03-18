@@ -86,7 +86,7 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 	
         if (selection.isCollapsed) {
 			const selection = editor.model.document.selection;
-			const range = selection.getFirstRange().getTrimmed();
+			const range = selection.getFirstRange()
 			const startLink = findLinkElementAncestor( range.start );
             
 			console.log(startLink, range, "startLinkstartLinkstartLink");
