@@ -80,7 +80,8 @@ export default class FileUploadEditing extends Plugin {
 				return fileTypes.test( file.type );
 			} );
 
-			const ranges = data.targetRanges.map( viewRange => editor.editing.mapper.toModelRange( viewRange ) );
+			// Use targetRanges if available, otherwise fallback to the current selection.
+			const ranges = data?.targetRanges?.map( viewRange => editor.editing.mapper.toModelRange( viewRange ) ) || Array.from( editor.model.document.selection.getRanges() );
 
 			editor.model.change( writer => {
 				// Set selection to paste target.
