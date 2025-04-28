@@ -229,7 +229,7 @@ export default class FileUploadEditing extends Plugin {
 			} )
 			.then( data => {
 				model.enqueueChange( 'transparent', writer => {
-					writer.setAttributes( { uploadStatus: 'complete', linkHref: data?.resourceUrl }, fileElement );
+					writer.setAttributes( { uploadStatus: 'complete', linkHref: data?.default }, fileElement );
 				} );
 
 				clean();

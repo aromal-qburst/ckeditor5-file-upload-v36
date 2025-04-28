@@ -65,7 +65,7 @@ yarn build
 ```
 # How it works
 
-The plugin creates a link entity inside editor content with an empty href attribute and when the upload process is completed the server response should contains an resourceUrl key which points to the uploaded file on the server. The value of the resourceUrl key will be added to the empty href attribute of the previously created link. 
+The plugin creates a link entity inside editor content with an empty href attribute and when the upload process is completed the server response should contains an default key which points to the uploaded file on the server. The value of the default key will be added to the empty href attribute of the previously created link. 
 
 ### Communication protocol
 When the file upload process starts, the adapter sends a POST request to config.simpleFileUpload.url.
@@ -86,7 +86,7 @@ This upload adapter will show users about the file upload progress with the help
 The progress bar has a button to cancel the file upload process.
 
 ### Upload complete
-When the file has been successfully uploaded, the server should return an object containing the resourceUrl key which points to the uploaded file on the server. The value of the resourceUrl key will be added to the empty href attribute of the previously created link. 
+When the file has been successfully uploaded, the server should return an object containing the default key which points to the uploaded file on the server. The value of the default key will be added to the empty href attribute of the previously created link. 
 
 ![Toolbar Inputs](https://bucket-doc-s1.s3.eu-central-1.amazonaws.com/images/print3.png)
 <br/>
