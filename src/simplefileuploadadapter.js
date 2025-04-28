@@ -89,7 +89,7 @@ class FileUploadAdapter {
             const previewUrl = this.options?.getResourcUrl?.(response) || response.url
 
             resolve( {
-                resourceUrl: previewUrl
+                default: previewUrl
             } );
         } );
 
