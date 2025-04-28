@@ -136,7 +136,7 @@ export function insertFileLink(writer, model, attributes = {}, file, editor) {
 
         }
     } catch (error) {
-        console.log(error, "ckeditor ====> errorerrorerrorerror");
+        // console.log(error, "ckeditor ====> errorerrorerrorerror");
     }
 }
 

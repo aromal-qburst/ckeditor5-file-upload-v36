@@ -155,7 +155,7 @@ export default class FileUploadEditing extends Plugin {
 	
 						}
 						} catch (error) {
-							console.log(error, "getFileLinksFromChangeItemerror", error);
+							// console.log(error, "getFileLinksFromChangeItemerror", error);
 						}
 
 					}
@@ -186,7 +186,7 @@ export default class FileUploadEditing extends Plugin {
 								// If the file was inserted to the graveyard - abort the loading process.
 								loader.abort();
 							} else if ( loader.status == 'idle' ) {
-								console.log(file, "console.log(file);console.log(file);console.log(file);console.log(file);");
+								// console.log(file, "console.log(file);console.log(file);console.log(file);console.log(file);");
 								// If the file was inserted into content and has not been loaded yet, start loading it.
 								this._readAndUpload( loader, file );
 							}
@@ -229,7 +229,7 @@ export default class FileUploadEditing extends Plugin {
 			} )
 			.then( data => {
 				model.enqueueChange( 'transparent', writer => {
-					writer.setAttributes( { uploadStatus: 'complete', linkHref: data?.resourceUrl }, fileElement );
+					writer.setAttributes( { uploadStatus: 'complete', linkHref: data?.default }, fileElement );
 				} );
 
 				clean();
